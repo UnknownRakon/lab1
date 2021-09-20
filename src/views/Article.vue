@@ -1,10 +1,14 @@
 <template>
   <b-container fluid>
-    <b-card v-for="article in articles" :key="article.id" class="news">
-      <b-media v-if="article.id == $route.params.id">
-        <h5 class="mt-0">{{ article.name }}</h5>
-        <p>{{ article.desc }}</p>
-        <i>{{ article.date }}</i>
+    <b-card class="news">
+      <b-media>
+        <h5 class="mt-0">
+          {{ getByIndex({ articles, index: $route.params.id }).name }}
+        </h5>
+        <p>
+          {{ getByIndex({ articles, index: $route.params.id }).desc }}
+        </p>
+        <i>{{ getByIndex({ articles, index: $route.params.id }).date }}</i>
       </b-media>
     </b-card>
   </b-container>
@@ -32,6 +36,11 @@ export default {
           console.log(error);
         }
       );
+  },
+  methods: {
+    getByIndex({ articles = [], index = 0 }) {
+      return articles[index] || {};
+    },
   },
 };
 </script>
