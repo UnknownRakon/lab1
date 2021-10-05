@@ -25,8 +25,21 @@
     </v-btn>
     <template v-slot:extension>
       <v-tabs align-with-title>
-        <router-link to="/" tag="div"> <v-tab> Главная</v-tab></router-link>
-        <router-link to="/news" tag="div"><v-tab> Новости</v-tab></router-link>
+        <v-tab>
+          <router-link to="/" tag="div" class="nav-link">
+            Главная</router-link
+          ></v-tab
+        >
+        <v-tab>
+          <router-link to="/news" tag="div" class="nav-link">
+            Новости</router-link
+          ></v-tab
+        >
+        <v-tab>
+          <router-link to="/gallery" tag="div" class="nav-link">
+            Галлерея</router-link
+          ></v-tab
+        >
       </v-tabs>
     </template>
   </v-app-bar>
@@ -42,7 +55,10 @@ export default {
 
 <style scoped lang="scss">
 .nav-link {
+  height: 100%;
   color: inherit;
-  text-decoration: inherit;
+}
+.nav-link:hover {
+  color: inherit;
 }
 </style>

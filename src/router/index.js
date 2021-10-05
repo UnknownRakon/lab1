@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import News from "../views/News.vue";
+import Gallery from "../views/Gallery.vue";
 import Article from "../views/Article.vue";
 
 Vue.use(VueRouter);
@@ -19,6 +20,10 @@ const routes = [
     path: "/article/:id",
     name: "article",
     component: Article,
+  },
+  {
+    path: "/gallery",
+    component: Gallery,
   },
 ];
 
