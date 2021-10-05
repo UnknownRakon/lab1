@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <v-app>
     <Header />
-    <router-view />
-  </div>
+
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <style lang="scss"></style>

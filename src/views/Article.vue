@@ -1,24 +1,35 @@
 <template>
-  <b-container fluid>
-    <b-card class="news">
-      <b-media>
-        <h5 class="mt-0">
-          {{ getByIndex({ articles, index: $route.params.id }).name }}
-        </h5>
-        <p>
-          {{ getByIndex({ articles, index: $route.params.id }).desc }}
-        </p>
-        <i>{{ getByIndex({ articles, index: $route.params.id }).date }}</i>
-      </b-media>
-    </b-card>
-  </b-container>
+  <v-container>
+    <div class="text-h3" align="center">
+      {{ getByIndex({ articles, index: $route.params.id }).name }}
+    </div>
+    <v-img
+      width="400"
+      class="mx-auto my-5"
+      :src="
+        returnSource(
+          getByIndex({ articles, index: $route.params.id }).full_image
+        )
+      "
+    ></v-img>
+    <p>
+      {{ getByIndex({ articles, index: $route.params.id }).desc }}
+    </p>
+    <i>{{ getByIndex({ articles, index: $route.params.id }).date }}</i>
+    <div class="text-h4" align="center">Комментарии</div>
+    <v-row v-for="(com, i) in comments" :key="i">
+      <i>{{ com.text }}</i>
+    </v-row>
+    <v-text-field label="комментарий" v-model="comment"></v-text-field>
+    <v-btn elevation="2" small v-on:click="addComment()">Добавить</v-btn>
+  </v-container>
 </template>
 
 <script>
 export default {
   name: "Article",
   data() {
-    return { articles: [] };
+    return { articles: [], comments: [], comment: "" };
   },
   beforeMount() {
     fetch("/articles.json", {
@@ -39,7 +50,14 @@ export default {
   },
   methods: {
     getByIndex({ articles = [], index = 0 }) {
-      return articles[index] || {};
+      return articles[index - 1] || {};
+    },
+    returnSource: function (src) {
+      return `/images/${src}`;
+    },
+    addComment: function () {
+      this.comments.push({ text: this.comment });
+      this.comment = "";
     },
   },
 };

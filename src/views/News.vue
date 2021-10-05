@@ -1,15 +1,39 @@
 <template>
-  <b-container fluid>
-    <b-card v-for="article in articles" :key="article.id" class="news">
-      <b-media>
-        <h5 class="mt-0">{{ article.name }}</h5>
-        <p>{{ article.date }}</p>
-        <router-link :to="{ name: 'article', params: { id: article.id } }">
-          Подробнее
+  <v-container class="d-flex pa-2 flex-wrap">
+    <v-card
+      v-for="article in articles"
+      :key="article.id"
+      class="mx-auto my-12"
+      max-width="374"
+    >
+      <template slot="progress">
+        <v-progress-linear
+          color="deep-purple"
+          height="10"
+          indeterminate
+        ></v-progress-linear>
+      </template>
+
+      <v-img height="250" :src="returnSource(article.preview_image)"></v-img>
+
+      <v-card-title>{{ article.name }}</v-card-title>
+
+      <v-card-text>
+        <div>{{ article.shortDesc }}</div>
+        <div>
+          {{ article.date }}
+        </div>
+      </v-card-text>
+      <v-card-actions>
+        <router-link
+          :to="{ name: 'article', params: { id: article.id } }"
+          tag="div"
+        >
+          <v-btn color="deep-purple lighten-2" text> Подробнее </v-btn>
         </router-link>
-      </b-media>
-    </b-card>
-  </b-container>
+      </v-card-actions>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -17,6 +41,11 @@ export default {
   name: "News",
   data() {
     return { articles: [] };
+  },
+  methods: {
+    returnSource: function (src) {
+      return `/images/${src}`;
+    },
   },
   beforeMount() {
     fetch("/articles.json", {

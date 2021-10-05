@@ -1,39 +1,48 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="dark" class="nav">
-    <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
-    <b-navbar-brand>Lab1</b-navbar-brand>
-    <b-collapse id="nav-text-collapse" is-nav>
-      <b-navbar-nav>
-        <b-nav-item class="nav__item">
-          <router-link to="/" class="nav__link"> Главная </router-link>
-        </b-nav-item>
-        <b-nav-item class="nav__item">
-          <router-link to="/news" class="nav__link"> Новости </router-link>
-        </b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+  <v-app-bar
+    app
+    dense
+    flat
+    absolute
+    color="#fcb69f"
+    dark
+    shrink-on-scroll
+    src="https://picsum.photos/1920/1080?random"
+  >
+    <template v-slot:img="{ props }">
+      <v-img
+        v-bind="props"
+        gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
+      ></v-img>
+    </template>
+    <Logo :style="{ width: 120, marginTop: 20 }" />
+    <v-spacer></v-spacer>
+    <div :style="{ width: 80 }">
+      <v-text-field label="search"></v-text-field>
+    </div>
+    <v-btn icon>
+      <v-icon>mdi-magnify</v-icon>
+    </v-btn>
+    <template v-slot:extension>
+      <v-tabs align-with-title>
+        <router-link to="/" tag="div"> <v-tab> Главная</v-tab></router-link>
+        <router-link to="/news" tag="div"><v-tab> Новости</v-tab></router-link>
+      </v-tabs>
+    </template>
+  </v-app-bar>
 </template>
 
 <script>
+import Logo from "./Logo.vue";
 export default {
+  components: { Logo },
   name: "Header",
 };
 </script>
 
 <style scoped lang="scss">
-.nav {
-  padding: 10px 20px;
-  margin-bottom: 20px;
-}
-.nav__link {
-  text-decoration: none;
+.nav-link {
   color: inherit;
-}
-.nav__item {
-  transition: transform 0.5s;
-  &:hover {
-    transform: scale(1.2);
-  }
+  text-decoration: inherit;
 }
 </style>

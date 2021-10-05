@@ -1,17 +1,15 @@
 <template>
-  <b-container fluid>
-    <b-card>
-      <b-media>
-        <h5 class="mt-0">Это лабораторная работа номер 1</h5>
-        <p>Меня уже бесить вью, можно, пожалуста, реакт? :)</p>
-      </b-media>
-    </b-card>
-  </b-container>
+  <v-container>
+    <h5 class="mt-0">Это лабораторная работа номер 1-2</h5>
+    <p>Меня бесит вью, можно реакт?</p>
+    <slider />
+  </v-container>
 </template>
 
 <script>
+import Slider from "../components/Slider.vue";
 export default {
   name: "Home",
-  components: {},
+  components: { Slider },
 };
 </script>
