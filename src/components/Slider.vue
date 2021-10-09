@@ -23,8 +23,8 @@ export default {
       return `/images/${src}`;
     },
   },
-  beforeMount() {
-    fetch("/articles.json", {
+  async beforeMount() {
+    await fetch("/articles.json", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -33,7 +33,7 @@ export default {
       })
       .then(
         (result) => {
-          this.articles = result;
+          this.articles = result.filter((item) => item.slider == true);
         },
         (error) => {
           console.log(error);

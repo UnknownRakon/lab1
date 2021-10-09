@@ -16,20 +16,19 @@
       {{ getByIndex({ articles, index: $route.params.id }).desc }}
     </p>
     <i>{{ getByIndex({ articles, index: $route.params.id }).date }}</i>
-    <div class="text-h4" align="center">Комментарии</div>
-    <v-row v-for="(com, i) in comments" :key="i">
-      <i>{{ com.text }}</i>
-    </v-row>
-    <v-text-field label="комментарий" v-model="comment"></v-text-field>
-    <v-btn elevation="2" small v-on:click="addComment()">Добавить</v-btn>
+    <Comments />
   </v-container>
 </template>
 
 <script>
+import Comments from "../components/Comments.vue";
 export default {
+  components: { Comments },
   name: "Article",
   data() {
-    return { articles: [], comments: [], comment: "" };
+    return {
+      articles: [],
+    };
   },
   beforeMount() {
     fetch("/articles.json", {
@@ -54,10 +53,6 @@ export default {
     },
     returnSource: function (src) {
       return `/images/${src}`;
-    },
-    addComment: function () {
-      this.comments.push({ text: this.comment });
-      this.comment = "";
     },
   },
 };

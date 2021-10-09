@@ -37,7 +37,7 @@
         >
         <v-tab>
           <router-link to="/gallery" tag="div" class="nav-link">
-            Галлерея</router-link
+            Галерея</router-link
           ></v-tab
         >
       </v-tabs>
