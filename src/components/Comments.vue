@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="text-h4" align="center">Комментарии</div>
-    <comments-list v-bind:array="this.comments" />
+    <comments-list v-if="!load" v-bind:array="this.comments" />
+    <loader v-if="load" />
     <div v-if="validate" class="text" align="center">
       Эээээ, пустые коменты не отправляй!
     </div>
@@ -12,25 +13,30 @@
 <script>
 import CommentForm from "./CommentForm.vue";
 import CommentsList from "./CommentsList.vue";
+import Loader from "./Loader.vue";
 export default {
-  components: { CommentsList, CommentForm },
+  components: { CommentsList, CommentForm, Loader },
   name: "Comments",
   props: ["id"],
   data() {
     return {
       comments: [],
-      validate: false,
+      validateError: false,
+      load: true,
     };
   },
   beforeMount() {
     this.getComments();
   },
   methods: {
-    getComments: function () {
-      fetch(`http://demo-api.vsdev.space/api/articles/${this.id}/comments`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
+    getComments: async function () {
+      await fetch(
+        `http://demo-api.vsdev.space/api/articles/${this.id}/comments`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      )
         .then((res) => {
           return res.json();
         })
@@ -42,10 +48,11 @@ export default {
             console.log(error);
           }
         );
+      this.load = false;
     },
     addComment: async function (data) {
       if (data.name !== "" && data.comment !== "") {
-        this.validate = false;
+        this.validateError = false;
         await fetch(
           `http://demo-api.vsdev.space/api/articles/${this.id}/comments`,
           {
@@ -61,7 +68,7 @@ export default {
         );
         this.getComments();
       } else {
-        this.validate = true;
+        this.validateError = true;
       }
     },
   },

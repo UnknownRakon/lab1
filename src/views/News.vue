@@ -1,19 +1,12 @@
 <template>
   <v-container class="d-flex pa-2 flex-wrap">
+    <loader v-if="load" />
     <v-card
       v-for="article in articles"
       :key="article.id"
       class="mx-auto my-12"
       max-width="374"
     >
-      <template slot="progress">
-        <v-progress-linear
-          color="deep-purple"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
-      </template>
-
       <v-img height="250" :src="returnSource(article.preview_image)"></v-img>
 
       <v-card-title>{{ article.name }}</v-card-title>
@@ -37,18 +30,21 @@
 </template>
 
 <script>
+import Loader from "../components/Loader.vue";
+
 export default {
+  components: { Loader },
   name: "News",
   data() {
-    return { articles: [] };
+    return { articles: [], load: true };
   },
   methods: {
     returnSource: function (src) {
       return `/images/${src}`;
     },
   },
-  beforeMount() {
-    fetch("http://demo-api.vsdev.space/api/articles", {
+  async beforeMount() {
+    await fetch("http://demo-api.vsdev.space/api/articles", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -63,6 +59,7 @@ export default {
           console.log(error);
         }
       );
+    this.load = false;
   },
 };
 </script>

@@ -23,7 +23,6 @@ export default {
   name: "Article",
   data() {
     return {
-      // articleId: $route.params.id,
       article: {},
     };
   },
