@@ -48,7 +48,7 @@ export default {
     },
   },
   beforeMount() {
-    fetch("/articles.json", {
+    fetch("http://demo-api.vsdev.space/api/articles", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })

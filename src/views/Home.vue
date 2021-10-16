@@ -1,7 +1,9 @@
 <template>
   <v-container>
-    <h5 class="mt-0">Это лабораторная работа номер 1-2</h5>
-    <p>Меня бесит вью, можно реакт?</p>
+    <div class="text-h3 text-center mt-0">
+      Это лабораторная работа номер 1-2
+    </div>
+    <p class="text-h4 text-center">Меня бесит вью, можно реакт?</p>
     <slider />
   </v-container>
 </template>

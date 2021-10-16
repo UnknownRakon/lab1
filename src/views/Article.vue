@@ -1,22 +1,18 @@
 <template>
   <v-container>
     <div class="text-h3" align="center">
-      {{ getByIndex({ articles, index: $route.params.id }).name }}
+      {{ this.article.name }}
     </div>
     <v-img
       width="400"
       class="mx-auto my-5"
-      :src="
-        returnSource(
-          getByIndex({ articles, index: $route.params.id }).full_image
-        )
-      "
+      :src="returnSource(this.article.full_image)"
     ></v-img>
     <p>
-      {{ getByIndex({ articles, index: $route.params.id }).desc }}
+      {{ this.article.desc }}
     </p>
-    <i>{{ getByIndex({ articles, index: $route.params.id }).date }}</i>
-    <Comments />
+    <i>{{ this.article.date }}</i>
+    <Comments v-bind:id="this.$route.params.id" />
   </v-container>
 </template>
 
@@ -27,11 +23,12 @@ export default {
   name: "Article",
   data() {
     return {
-      articles: [],
+      // articleId: $route.params.id,
+      article: {},
     };
   },
-  beforeMount() {
-    fetch("/articles.json", {
+  mounted() {
+    fetch(`http://demo-api.vsdev.space/api/articles/${this.$route.params.id}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -40,7 +37,7 @@ export default {
       })
       .then(
         (result) => {
-          this.articles = result;
+          this.article = result;
         },
         (error) => {
           console.log(error);
@@ -48,9 +45,6 @@ export default {
       );
   },
   methods: {
-    getByIndex({ articles = [], index = 0 }) {
-      return articles[index - 1] || {};
-    },
     returnSource: function (src) {
       return `/images/${src}`;
     },

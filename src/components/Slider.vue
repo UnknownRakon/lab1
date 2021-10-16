@@ -24,7 +24,7 @@ export default {
     },
   },
   async beforeMount() {
-    await fetch("/articles.json", {
+    await fetch("http://demo-api.vsdev.space/api/articles", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
