@@ -1,39 +1,43 @@
 <template>
   <v-container class="d-flex pa-2 flex-wrap">
     <loader v-if="load" />
-    <v-card
-      v-for="article in articles"
-      :key="article.id"
-      class="mx-auto my-12"
-      max-width="374"
-    >
-      <v-img height="250" :src="returnSource(article.preview_image)"></v-img>
+    <Filters v-if="!load" />
+    <v-row>
+      <v-card
+        v-for="article in articles"
+        :key="article.id"
+        class="mx-auto my-12"
+        max-width="374"
+      >
+        <v-img height="250" :src="returnSource(article.preview_image)"></v-img>
 
-      <v-card-title>{{ article.name }}</v-card-title>
+        <v-card-title>{{ article.name }}</v-card-title>
 
-      <v-card-text>
-        <div>{{ article.shortDesc }}</div>
-        <div>
-          {{ article.date }}
-        </div>
-      </v-card-text>
-      <v-card-actions>
-        <router-link
-          :to="{ name: 'article', params: { id: article.id } }"
-          tag="div"
-        >
-          <v-btn color="deep-purple lighten-2" text> Подробнее </v-btn>
-        </router-link>
-      </v-card-actions>
-    </v-card>
+        <v-card-text>
+          <div>{{ article.shortDesc }}</div>
+          <div>
+            {{ article.date }}
+          </div>
+        </v-card-text>
+        <v-card-actions>
+          <router-link
+            :to="{ name: 'article', params: { id: article.id } }"
+            tag="div"
+          >
+            <v-btn color="deep-purple lighten-2" text> Подробнее </v-btn>
+          </router-link>
+        </v-card-actions>
+      </v-card>
+    </v-row>
   </v-container>
 </template>
 
 <script>
 import Loader from "../components/Loader.vue";
+import Filters from "../components/Filters.vue";
 
 export default {
-  components: { Loader },
+  components: { Loader, Filters },
   name: "News",
   data() {
     return { articles: [], load: true };
